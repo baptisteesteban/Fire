@@ -5,18 +5,15 @@
 
 # include <GL/glew.h>
 
-namespace bgl
+class program
 {
-  class program
-  {
-  public:
-    program(const std::string& vertex_filename, const std::string& fragment_filename);
-    ~program();
-    void use();
-
-  private:
-    GLuint program_;
-  };
-}
+public:
+  program(const std::string& vertex_filename, const std::string& fragment_filename);
+  ~program();
+  void use();
+  
+private:
+  GLuint program_;
+};
 
 #endif /* !PTOGRAM_HH */
