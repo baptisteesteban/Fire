@@ -3,7 +3,7 @@
 #include <sstream>
 #include <stdexcept>
 
-#include <fire/program.hh>
+#include "program.hh"
 
 program::program(const std::string& vertex_filename,
 		 const std::string& fragment_filename)

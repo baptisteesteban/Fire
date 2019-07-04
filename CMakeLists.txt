@@ -11,7 +11,9 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${SDL2_DIR})
 set(CMAKE_CXX_STANDARD 17)
 
 set(SRC
-  src/main.cc)
+  src/main.cc
+  src/program.cc
+  src/triangle.cc)
 
 add_executable(fire ${SRC})
 target_link_libraries(fire OpenGL::GL SDL2::SDL2 SDL2::SDL2main GLEW)
