@@ -21,7 +21,7 @@ bool init_glew()
 void init_gl()
 {
   glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-  glEnable(GL_POINT_SIZE);
+  glEnable(GL_PROGRAM_POINT_SIZE);
 }
 
 int main(int argc, char *argv[])
