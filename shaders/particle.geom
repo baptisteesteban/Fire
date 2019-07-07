@@ -8,7 +8,6 @@ out vec4 frag_color;
 
 void main()
 {
-  
   frag_color = vert_color[0];
   gl_Position = gl_in[0].gl_Position;
   gl_PointSize = 5;

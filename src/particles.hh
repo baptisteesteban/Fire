@@ -21,7 +21,7 @@ struct particle
       dir[1] = RandomFloat(0.1f, 0.5f);
       dir[2] = 0.0f;
 
-      dt = 0.1;
+      dt = 0.025;
       life = 1.0f;
     }
   
