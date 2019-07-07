@@ -15,56 +15,57 @@ float RandomFloat(float min, float max)
   return (random*range) + min;
 }
 
-particles::particles(const GLuint nb_particles)
-  : nb_particles_(nb_particles)
-  , p_("../shaders/particle.vert", "../shaders/particle.frag", "../shaders/particle.geom")
-  , dt_(0)
+particles::particles()
+  : p_("../shaders/particle.vert", "../shaders/particle.frag", "../shaders/particle.geom")
 {
   srand(time(NULL));
   
   glGenVertexArrays(1, &vao_);
-  GLuint vbo[2];
-  glGenBuffers(2, vbo);
-  
-  glBindVertexArray(vao_);
-  
-  /* Position VBO */
-  std::vector<GLfloat> pos(nb_particles_ * 3);
-  glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
-  glBufferData(GL_ARRAY_BUFFER, pos.size() * sizeof(GLfloat), &pos[0], GL_DYNAMIC_DRAW);
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (void*)0);
-  glEnableVertexAttribArray(0);
-
-  /*Directional vectors */
-  std::vector<GLfloat> dir(nb_particles_ * 3);
-  for (std::size_t i = 0; i < nb_particles_; i++)
-  {
-    dir[i * 3] = RandomFloat(0.0f, 0.03f);
-    dir[i * 3 + 1] = RandomFloat(0.02f, 0.05f);
-    dir[i * 3 + 2] = 0;
-  }
-
-  
-  glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
-  glBufferData(GL_ARRAY_BUFFER, dir.size() * sizeof(GLfloat), &dir[0], GL_STATIC_DRAW);
-  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (void*)0);
-  glEnableVertexAttribArray(1);
- 
 }
 
 void
 particles::draw()
-{ 
+{
   p_.use();
   glBindVertexArray(vao_);
-  glDrawArrays(GL_POINTS, 0, nb_particles_);
+  glDrawArrays(GL_POINTS, 0, particles_.size());
 }
 
 void
 particles::update()
 {
-  if (dt_ > 20)
-    dt_ = 0;
-  dt_ += 1;
-  p_.setUniformui(dt_, "dt");
+  for (auto it = particles_.begin(); it != particles_.end(); it++)
+  {
+    /* Delete old particles */
+    if (it->life <= 0.0f)
+      particles_.erase(it);
+    
+    /* Update particles */
+    it->pos[0] += it->dt * it->dir[0];
+    it->pos[1] += it->dt * it->dir[1];
+    it->pos[2] += it->dt * it->dir[2];
+    it->life -= 0.1f;
+  }
+  /* Generate particles */
+  for (int i = 0; i < 1000; i++)
+    particles_.push_back(particle());
+
+  /* Create VBO */
+  std::vector<GLfloat> pos;
+  for (auto it = particles_.begin(); it != particles_.end(); it++)
+  {
+    pos.push_back(it->pos[0]);
+    pos.push_back(it->pos[1]);
+    pos.push_back(it->pos[2]);
+  }
+  
+   GLuint vbo;
+  glGenBuffers(1, &vbo);
+  
+  glBindVertexArray(vao_);
+  
+  glBindBuffer(GL_ARRAY_BUFFER, vbo);
+  glBufferData(GL_ARRAY_BUFFER, pos.size() * sizeof(GLfloat), &pos[0], GL_DYNAMIC_DRAW);
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (void*)0);
+  glEnableVertexAttribArray(0);
 }
