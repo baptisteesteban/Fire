@@ -44,7 +44,7 @@ particles::update()
     it->pos[0] += it->dt * it->dir[0];
     it->pos[1] += it->dt * it->dir[1];
     it->pos[2] += it->dt * it->dir[2];
-    it->life -= 0.1f;
+    it->life -= 0.05f;
   }
   /* Generate particles */
   for (int i = 0; i < 1000; i++)

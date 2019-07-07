@@ -14,14 +14,14 @@ struct particle
   particle()
     {
       pos[0] = 0.0f;
-      pos[1] = -0.5f;
+      pos[1] = -0.90f;
       pos[2] = 0.0f;
 
       dir[0] = RandomFloat(0.0f, 0.05f);
       dir[1] = RandomFloat(0.1f, 0.5f);
       dir[2] = 0.0f;
 
-      dt = 0.3;
+      dt = 0.1;
       life = 1.0f;
     }
   
