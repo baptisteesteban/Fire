@@ -17,7 +17,7 @@ public:
   void setUniformui(GLuint e, const std::string& name);
   void setUniformi(GLint e, const std::string& name);
   void setUniformf(GLfloat e, const std::string& name);
-  
+
 private:
   GLuint program_;
 };

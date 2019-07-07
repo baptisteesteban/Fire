@@ -7,33 +7,18 @@
 
 # include "program.hh"
 
-struct particle
-{
-  particle()
-    : pos({0.0f, 0.0f, 0.0f})
-    , life(1.0f)
-    , speed(0.0f)
-    , dir({0.0f, 0.0f, 0.0f})
-    {}
-  
-  GLfloat pos[3];
-  GLfloat life;
-  GLfloat speed;
-  GLfloat dir[3];
-};
-
 class particles
 {
 public:
-  particles();
+  particles(const GLuint nb_particles);
   void draw();
   void update();
 
 private:
+  const GLuint nb_particles_;
   program p_;
   GLuint vao_;
-  GLfloat dt_;
-  std::vector<particle> parts_;
+  GLuint dt_;
 };
 
 #endif /* !PARTICLES_HH */

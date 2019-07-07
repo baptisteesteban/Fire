@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
   init_gl();
 
   // Initialization of the object
-  auto fire = particles();
+  auto fire = particles(1000);
   
   // Program loop
   bool running = true;
@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
     fire.draw();
     fire.update();
     
-//    glFlush();
+    glFlush();
     SDL_GL_SwapWindow(window);
   }
 
