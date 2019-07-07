@@ -52,20 +52,28 @@ particles::update()
 
   /* Create VBO */
   std::vector<GLfloat> pos;
+  std::vector<GLfloat> life;
   for (auto it = particles_.begin(); it != particles_.end(); it++)
   {
     pos.push_back(it->pos[0]);
     pos.push_back(it->pos[1]);
     pos.push_back(it->pos[2]);
+
+    life.push_back(it->life);
   }
   
-   GLuint vbo;
-  glGenBuffers(1, &vbo);
+   GLuint vbo[2];
+  glGenBuffers(2, vbo);
   
   glBindVertexArray(vao_);
   
-  glBindBuffer(GL_ARRAY_BUFFER, vbo);
+  glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
   glBufferData(GL_ARRAY_BUFFER, pos.size() * sizeof(GLfloat), &pos[0], GL_DYNAMIC_DRAW);
   glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (void*)0);
   glEnableVertexAttribArray(0);
+  
+  glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
+  glBufferData(GL_ARRAY_BUFFER, life.size() * sizeof(GLfloat), &life[0], GL_DYNAMIC_DRAW);
+  glVertexAttribPointer(1, 1, GL_FLOAT, GL_FALSE, sizeof(GLfloat), (void*)0);
+  glEnableVertexAttribArray(1);
 }
